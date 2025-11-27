@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CAT Mock Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background: #f4f4f4;
+    }
+    h1, h2 {
+      text-align: center;
+    }
+    .question {
+      background: white;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .options label {
+      display: block;
+      margin: 8px 0;
+    }
+    #submitBtn {
+      display: block;
+      margin: 20px auto;
+      padding: 12px 24px;
+      font-size: 16px;
+      background: #28a745;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    #timer {
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    #result {
+      text-align: center;
+      font-size: 22px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>CAT Mock Test</h1>
+  <div id="timer">Time left: <span id="time">30:00</span></div>
+
+  <form id="quizForm">
+    <div class="question">
+      <h3>1. What is the value of √(144)?</h3>
+      <div class="options">
+        <label><input type="radio" name="q1" value="a"> 10</label>
+        <label><input type="radio" name="q1" value="b"> 12</label>
+        <label><input type="radio" name="q1" value="c"> 14</label>
+        <label><input type="radio" name="q1" value="d"> 16</label>
+      </div>
+    </div>
+
+    <div class="question">
+      <h3>2. Synonym of "Eloquent"</h3>
+      <div class="options">
+        <label><input type="radio" name="q2" value="a"> Silent</label>
+        <label><input type="radio" name="q2" value="b"> Persuasive</label>
+        <label><input type="radio" name="q2" value="c"> Dull</label>
+        <label><input type="radio" name="q2" value="d"> Blunt</label>
+      </div>
+    </div>
+
+    <div class="question">
+      <h3>3. If A can do a job in 10 days and B can do it in 15 days, how long will it take if they work together?</h3>
+      <div class="options">
+        <label><input type="radio" name="q3" value="a"> 6 days</label>
+        <label><input type="radio" name="q3" value="b"> 8 days</label>
+        <label><input type="radio" name="q3" value="c"> 5 days</label>
+        <label><input type="radio" name="q3" value="d"> 9 days</label>
+      </div>
+    </div>
+
+    <button type="button" id="submitBtn">Submit Test</button>
+  </form>
+
+  <div id="result"></div>
+
+  <script>
+    const answers = {
+      q1: 'b',
+      q2: 'b',
+      q3: 'a'
+    };
+
+    document.getElementById('submitBtn').addEventListener('click', () => {
+      let score = 0;
+      const form = document.forms['quizForm'];
+      for (let q in answers) {
+        if (form[q].value === answers[q]) score++;
+      }
+      document.getElementById('result').innerText = `You scored ${score}/3`;
+    });
+
+    // Timer logic
+    let secondsLeft = 1800;
+    const timerEl = document.getElementById('time');
+    const countdown = setInterval(() => {
+      const min = Math.floor(secondsLeft / 60);
+      const sec = secondsLeft % 60;
+      timerEl.textContent = `${min}:${sec.toString().padStart(2, '0')}`;
+      secondsLeft--;
+      if (secondsLeft < 0) {
+        clearInterval(countdown);
+        document.getElementById('submitBtn').click();
+      }
+    }, 1000);
+  </script>
+
+</body>
+</html>
